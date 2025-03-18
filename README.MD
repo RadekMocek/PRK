@@ -4,12 +4,16 @@
 
 ### Initial language idea
 
+<details>
+
+<summary>Expand / Collapse</summary>
+
 Grammar rules in this section are all over the place. The main purpose of this section is to introduce the basic idea of the language and to get it out of my head ☺.
 
 #### Program structure
 
 ```text
-<program> → (<command><newline>)+
+<program> → (" "*<command><newline>)+
 
 <newline> → \n
 ```
@@ -21,7 +25,7 @@ Program consists of commands and each command is on its own line.
 ```text
 <command> → MAKE <var_id> <expr>
 <command> → PRINT <expr>
-<command> → PRINT_TEXT .*
+<command> → PRINT_TEXT .+
 
 <var_id> → [a-zA-Z][a-zA-Z0-9]*
 ```
@@ -33,7 +37,7 @@ Program consists of commands and each command is on its own line.
 ```text
 <command> → UNTIL <comparison><newline><program>END
 
-<comparison> → <expr><comp_oper><expr>
+<comparison> → <expr> <comp_oper> <expr>
 
 <comp_oper> → == | >= | <= | <>
 ```
@@ -59,6 +63,35 @@ Program consists of commands and each command is on its own line.
 ```
 
 Lines beginning with a `#` are ignored.
+
+</details>
+
+### BNF
+
+```ebnf
+Program ::= (Space* Command Newline)+
+
+Command ::=
+      "MAKE" Space VarID Space Expr
+    | "PRINT" Space Expr
+    | "PRINT_TEXT" Space .+
+    | "UNTIL" Space Comparison Newline Program "END"
+    | "#" .*
+
+VarID ::= [a-zA-Z][a-zA-Z0-9]*
+
+Comparison ::= Expr Space CompOper Space Expr
+CompOper ::= "==" | ">=" | "<=" | "<>"
+
+Expr ::= VarOrNum | VarOrNum ExprOper Expr | "(" Expr ")" | "(" Expr ")" ExprOper Expr
+
+VarOrNum ::= VarID | Number
+Number ::= "0" | "-"?[1-9][0-9]*
+ExprOper ::= "+" | "-" | "*" | "/" | "^" | "%"
+
+Newline ::= "\n"
+Space ::= " "
+```
 
 ### Examples
 
@@ -107,4 +140,6 @@ END
 
 * Variables can only hold integers
 * Variable names consist only of letters & numbers; they cannot start with a number
-* Not sure about whitespace characters in expressions, comparisons, ...
+* There can be no spaces in expressions
+* There must be two spaces in comparisons (one on each side of the operator)
+* It is up to the programmer to decide the number of spaces before each command
