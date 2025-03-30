@@ -15,6 +15,8 @@ are supported.
 
 ```
 
+Element that starts and ends with double quotation marks, with any number of any characters in between, is called _string_. Backslash `\` serves as a escape character, so `PRINT "Hello \"World\"!"` command will print `Hello "World"!`.
+
 ### Program structure and whitespace behaviour
 
 Program in Yappembler consists of commands. Each command is on its own line ⇒ there must be a newline character after every command.
@@ -104,17 +106,100 @@ SET     varB    USERIN
 
 /* Wrong */
 SET varA TO USERIN
+
 ```
 
 #### Printing variables
 
 ```sql
 PRINT varA
+
 ```
 
 ### Value expressions
 
+Value expressions consist of constant integers (`'0' | '-'? [1-9] [0-9]*`) and/or variable identificators, which must be separated with mathematical operators (`+`, `-`, `*`, `/`, `%`, `^`). These operators are binary, unary minus operator `-` is also allowed. Brackets (`(` and `)`) can be used to specify operation priority.
+
+* Value expressions can be used in:
+  * The `SET` command
+  * The `PRINT` command
+  * Logical expressions
+  * The `REPEAT` command
+* Operation priority:
+  1. `()`, `-` — brackets and unary minus
+  2. `^` — exponentiation
+  3. `*`, `/`, `%` — multiply, divide, modulo
+  4. `+`, `-` — add, subtract
+
+```sql
+/* Correct */
+SET x TO x+1
+SET x TO    x  +   1
+PRINT a+a*a
+PRINT a+(a*a)
+PRINT (a * a / (-a)) ^ (a % a)
+PRINT -a
+PRINT a - - - - - - - - a
+PRINT a+a*-a
+PRINT a+a*(-a)
+PRINT a+a*-(a)
+
+/* Wrong */
+PRINT (a+a)*
+PRINT (a*a+(a))+a*a)
+PRINT a+
+PRINT *a
+PRINT +a
+PRINT a+*
+PRINT a+(a+a
+PRINT )a*a)
+PRINT a++a
+PRINT (a+
+PRINT a)*a
+PRINT a + + + a
+
+```
+
+From now on, variable identifiers and integer constants will also be adressed as value expressions.
+
 ### String interpolation
+
+The `PRINT` command can be followed by any amount of value expressions and strings. They can be separated by spaces, but it's not mandatory.
+
+```sql
+/* Correct */
+PRINT "The value of x is " x " and the value of y is not " (y * 2) ^ 3 "."
+PRINT "The value of x is "   x   " and the value of y is not "   (y * 2) ^ 3   "."
+PRINT "The value of x is "x" and the value of y is not "(y * 2) ^ 3"."
+PRINT "The value of negative x is " -x
+PRINT """"""
+
+/* Wrong */
+PRINT "The value of x is ", x, "."
+PRINT "The value of x is " + x + "."
+PRINT "The value of x is " x " thanks for your attention
+PRINT """""
+
+```
+
+String interpolation in Yappembler can get wild because you can write multiple value expressions without string between them.
+
+```sql
+/* Correct */
+PRINT x+1 x+2 x+3       /*This is evaluated as three separate expressions: x+1, x+2, x+3*/
+PRINT x+1x+2x+3         /*Same here*/
+PRINT x + 1 x + 2x + 3  /*Same here*/
+PRINT x+1 "" x+2 "" x+3 /*Expressions can be separated by empty strings to improve readability*/
+PRINT x+1+  x+2         /*This is evaluated as a single expression: x+1+x+2*/
+
+/* Wrong */
+PRINT x+1+ "" x+2
+PRINT ("")
+```
+
+### Logical expressions
+
+Logical expressions consists of atleast one _comparison_. ...
 
 ### Condition branching
 
@@ -123,11 +208,40 @@ PRINT varA
 ## List of keywords and operators
 
 ```sql
+/* Keywords */
 CREATE
 PRINT
 SET
 TO
 USERIN
+
+/* Strings */
+""
+\
+
+/* Value expressions */
++
+-
+*
+/
+%
+^
+()
+
+/* Logical expressions */
+OR
+AND
+()
+!()
+==
+<>
+>=
+>
+<=
+<
+
+/* Code blocks */
+;;
 ```
 
 <!--
