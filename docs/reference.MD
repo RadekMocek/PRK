@@ -202,7 +202,9 @@ PRINT ("")
 
 Logical expressions consists of atleast one _comparison_. Comparison consists of two value expressions and one comparison operator in between them<!--: `<Comparison> → <Value Expression> <Comparison Operator> <Value Expression>`-->. Comparison operators are: `==`, `<>`, `>=`, `>`, `<=`, `<`.
 
-More complex logical expressions can be made by joining multiple comparisons together with `AND`/`OR` keywords. Brackets can be used to specify priority and exclamation mark (`!`, _negation_) can be used to flip the outcome of the comparison(s). Negation can be written only before brackets containing comparisons(s).
+More complex logical expressions can be made by joining multiple comparisons together with `AND`/`OR` keywords. Both of these keywords have to be separated from surrounding expressions with atleast one space on easch side.
+
+Brackets can be used to specify priority and exclamation mark (`!`, _negation_) can be used to flip the outcome of the comparison(s). Negation can be written only before brackets containing comparisons(s). There mustn't be any spaces between negation and expression in the bracket.
 
 Logical expressions are used in branching via the `IF` command and looping via the `UNTIL` command.
 
@@ -218,6 +220,8 @@ IF !(!(7 > x)) AND x > 5
 ;;
 IF !(!(7 > x) AND x > 5)
 ;;
+IF (x>5)    AND     (x<7)
+;;
 IF x == 5 OR y <> 6 + x AND 5 * z <= 6
 ;;
 IF (x == 5) OR (y <> 6 + x) AND (5 * z <= 6)
@@ -228,13 +232,19 @@ IF (x == 5 OR y <> (6 + x)) AND !(5 * z <= 6)
 /* Wrong */
 IF 7 > x > 5
 ;;
+IF !  (x > 5)
+;;
 IF !x > 5
 ;;
 IF !!(x > 5)
 ;;
+IF (x>5)AND(x<7)
+;;
 IF (x == 5 OR y <> !(6 + x)) AND (5 * z <= 6)
 ;;
 IF (x == 5) OR (y <> 6) + x AND (5 * z <= 6)
+;;
+IF AND x==5
 ;;
 
 SET x TO 5 > 4

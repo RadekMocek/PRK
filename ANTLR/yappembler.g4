@@ -1,17 +1,22 @@
 grammar yappembler;
 
 program
-        : ( command NEWLINE | NEWLINE )+
+        : lines EOF
 ;
+
+lines
+        : ( command NEWLINE | NEWLINE )*
+;
+
 
 command
         : 'CREATE ' ( VARID )* VARID
         | 'SET ' VARID 'TO ' expr
         | 'SET ' VARID 'USERIN'
         | 'PRINT ' ( STRING | expr )+
-        | 'IF ' logc NEWLINE program? ( 'ELIF ' logc NEWLINE program? )* ( 'ELSE' NEWLINE program? )? ';;'
-        | 'REPEAT ' expr NEWLINE program? ';;'
-        | 'UNTIL ' logc NEWLINE program? ';;'
+        | 'IF ' logc NEWLINE lines ( 'ELIF ' logc NEWLINE lines )* ( 'ELSE' NEWLINE lines )? ';;'
+        | 'REPEAT ' expr NEWLINE lines ';;'
+        | 'UNTIL ' logc NEWLINE lines ';;'
 ;
 
 expr
@@ -38,12 +43,12 @@ expr_item
 
 logc
         : logc_and
-        | logc 'OR' logc_and
+        | logc OR logc_and
 ;
 
 logc_and
         : logc_item
-        | logc_and 'AND' logc_item
+        | logc_and AND logc_item
 ;
 
 logc_item
@@ -64,10 +69,14 @@ NEWLINE : '\r'? '\n' ;
 
 VARID : [a-z] [a-zA-Z0-9_]* ;
 
-INTEGER : '0' | /*'-'?*/ [1-9] [0-9]* ;
+INTEGER : '0' | [1-9] [0-9]* ;
 
 STRING : '"' ( ~["\r\n] | '\\' . )* '"' ;
 
-WS : [ \t]+ -> skip ;
+WS_SKIP : [ \t]+ -> skip ;
 
-COMMENT : '/*' .*? '*/' -> skip ;
+COMMENT_SKIP : '/*' .*? '*/' -> skip ;
+
+fragment WS : [ \t]+ ;
+OR : WS 'OR' WS ;
+AND : WS 'AND' WS ;
