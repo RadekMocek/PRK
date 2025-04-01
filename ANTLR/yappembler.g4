@@ -13,10 +13,17 @@ command
         : 'CREATE ' ( VARID )* VARID
         | 'SET ' VARID 'TO ' expr
         | 'SET ' VARID 'USERIN'
-        | 'PRINT ' ( STRING | expr )+
+        | 'PRINT ' interpol
         | 'IF ' logc NEWLINE lines ( 'ELIF ' logc NEWLINE lines )* ( 'ELSE' NEWLINE lines )? ';;'
         | 'REPEAT ' expr NEWLINE lines ';;'
         | 'UNTIL ' logc NEWLINE lines ';;'
+;
+
+interpol
+        : STRING ( expr STRING )*
+        | STRING ( expr STRING )* expr
+        | expr ( STRING expr )*
+        | expr ( STRING expr )* STRING
 ;
 
 expr

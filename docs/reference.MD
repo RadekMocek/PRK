@@ -164,37 +164,34 @@ From now on, variable identifiers and integer constants will also be adressed as
 
 ### String interpolation
 
-The `PRINT` command can be followed by any amount of value expressions and strings. They can be separated by spaces, but it's not mandatory.
+The `PRINT` command can be followed by any amount of value expressions and strings. They can be separated by spaces, but it's not mandatory. Value expressions and strings must alternate – there cannot be more strings or more expressions next to each other.
 
 ```sql
 /* Correct */
+PRINT 1 "1" 2"2"
+PRINT 1 "1" 2 "2"3
+PRINT "1" 1 "2" 2"3"
+PRINT "1" 1 "2" 2 "3"3
+PRINT x+1 "" x+2 "" x+3
+PRINT ""x"" /* May look wrong but it's just a variable x between two empty strings */
 PRINT "The value of x is " x " and the value of y is not " (y * 2) ^ 3 "."
 PRINT "The value of x is "   x   " and the value of y is not "   (y * 2) ^ 3   "."
 PRINT "The value of x is "x" and the value of y is not "(y * 2) ^ 3"."
 PRINT "The value of negative x is " -x
-PRINT """"""
 
 /* Wrong */
+PRINT 1 2 "1 2"
+PRINT 12 "1" "2"
+PRINT """x"""
+PRINT """"x""""
+PRINT x+1 x+2 x+3
 PRINT "The value of x is ", x, "."
 PRINT "The value of x is " + x + "."
 PRINT "The value of x is " x " thanks for your attention
 PRINT """""
-
-```
-
-String interpolation in Yappembler can get wild because you can write multiple value expressions without string between them.
-
-```sql
-/* Correct */
-PRINT x+1 x+2 x+3       /* This is evaluated as three separate expressions: x+1, x+2, x+3 */
-PRINT x+1x+2x+3         /* Same here */
-PRINT x + 1 x + 2x + 3  /* Same here */
-PRINT x+1 "" x+2 "" x+3 /* Expressions can be separated by empty strings to improve readability */
-PRINT x+1+  x+2         /* This is evaluated as a single expression: x+1+x+2 */
-
-/* Wrong */
 PRINT x+1+ "" x+2
 PRINT ("")
+PRINT x == 5 /* Logical expressions cannot be printed */
 
 ```
 
