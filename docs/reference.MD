@@ -19,7 +19,7 @@ Element that starts and ends with double quotation marks, with any number of any
 
 ### Program structure and whitespace behaviour
 
-Program in Yappembler consists of commands. Each command is on its own line ⇒ there must be a newline character after every command.
+Program in Yappembler consists of commands. Each command is on its own line ⇒ there must be a newline character after every command. There are constructions in Yappembler which may thought of as a "multi-line command", e.g. condition branching via `IF - ELIF - ELSE`.
 
 ```sql
 /* Correct */
@@ -118,7 +118,7 @@ PRINT varA
 
 ### Value expressions
 
-Value expressions consist of constant integers (`'0' | '-'? [1-9] [0-9]*`) and/or variable identificators, which must be separated with mathematical operators (`+`, `-`, `*`, `/`, `%`, `^`). These operators are binary, unary minus operator `-` is also allowed. Brackets (`(` and `)`) can be used to specify operation priority.
+Value expressions consist of constant integers (`'0' | [1-9] [0-9]*`) and/or variable identificators, which must be separated with mathematical operators (`+`, `-`, `*`, `/`, `%`, `^`). These operators are binary, unary minus operator `-` is also allowed. Brackets (`(` and `)`) can be used to specify operation priority.
 
 * Value expressions can be used in:
   * The `SET` command
@@ -186,22 +186,133 @@ String interpolation in Yappembler can get wild because you can write multiple v
 
 ```sql
 /* Correct */
-PRINT x+1 x+2 x+3       /*This is evaluated as three separate expressions: x+1, x+2, x+3*/
-PRINT x+1x+2x+3         /*Same here*/
-PRINT x + 1 x + 2x + 3  /*Same here*/
-PRINT x+1 "" x+2 "" x+3 /*Expressions can be separated by empty strings to improve readability*/
-PRINT x+1+  x+2         /*This is evaluated as a single expression: x+1+x+2*/
+PRINT x+1 x+2 x+3       /* This is evaluated as three separate expressions: x+1, x+2, x+3 */
+PRINT x+1x+2x+3         /* Same here */
+PRINT x + 1 x + 2x + 3  /* Same here */
+PRINT x+1 "" x+2 "" x+3 /* Expressions can be separated by empty strings to improve readability */
+PRINT x+1+  x+2         /* This is evaluated as a single expression: x+1+x+2 */
 
 /* Wrong */
 PRINT x+1+ "" x+2
 PRINT ("")
+
 ```
 
 ### Logical expressions
 
-Logical expressions consists of atleast one _comparison_. ...
+Logical expressions consists of atleast one _comparison_. Comparison consists of two value expressions and one comparison operator in between them<!--: `<Comparison> → <Value Expression> <Comparison Operator> <Value Expression>`-->. Comparison operators are: `==`, `<>`, `>=`, `>`, `<=`, `<`.
+
+More complex logical expressions can be made by joining multiple comparisons together with `AND`/`OR` keywords. Brackets can be used to specify priority and exclamation mark (`!`, _negation_) can be used to flip the outcome of the comparison(s). Negation can be written only before brackets containing comparisons(s).
+
+Logical expressions are used in branching via the `IF` command and looping via the `UNTIL` command.
+
+```sql
+/* Correct */
+IF x > 5
+;;
+IF 7 > x AND x > 5
+;;
+IF !(7 > x) AND x > 5
+;;
+IF !(!(7 > x)) AND x > 5
+;;
+IF !(!(7 > x) AND x > 5)
+;;
+IF x == 5 OR y <> 6 + x AND 5 * z <= 6
+;;
+IF (x == 5) OR (y <> 6 + x) AND (5 * z <= 6)
+;;
+IF (x == 5 OR y <> (6 + x)) AND !(5 * z <= 6)
+;;
+
+/* Wrong */
+IF 7 > x > 5
+;;
+IF !x > 5
+;;
+IF !!(x > 5)
+;;
+IF (x == 5 OR y <> !(6 + x)) AND (5 * z <= 6)
+;;
+IF (x == 5) OR (y <> 6) + x AND (5 * z <= 6)
+;;
+
+SET x TO 5 > 4
+SET x TO 1 OR 2
+
+```
 
 ### Condition branching
+
+Branching can be done with the `IF` command, which is followed by a logical expression. Line with the `IF` command is then followed by any number of other commands (each on their own line), which shall be executed if the logical expression is true. This "chain of conditioned commands" must be terminated with two semicolons (`;;`, _terminator_). Terminator must be on its own line.
+
+```sql
+/* Correct */
+IF x == 5
+    PRINT "Okay!"
+;;
+
+IF x == 5
+PRINT "Okay!"
+;;
+
+    IF x == 5
+PRINT "Okay!"
+    ;;
+
+IF x == 5
+    IF x == 6
+        PRINT "Unreachable"
+    ;;
+;;
+
+/* Wrong */
+/* - Line separation violation - */
+IF x == 5 PRINT "NotOkay!"
+;;
+
+IF x == 5
+    PRINT "NotOkay!" ;;
+
+IF x == 5
+    IF x == 6
+        PRINT "Unreachable"
+;;;;
+
+/* - Non-terminated block - */
+IF x == 5
+    PRINT "NotOkay!"
+
+```
+
+* To define branching for different conditions:
+  * `IF` may be followed by any number of `ELIF`s
+    * `ELIF` has a condition parameter (same as `IF`)
+  * `IF` or the last `ELIF` may be followed by one `ELSE`
+    * `ELSE` has no parameters (must be only thing on its line)
+  * The whole `IF-ELIF*-ELSE?` construct is still terminated with one terminator `;;` at the end
+
+```sql
+/* Correct */
+IF x == 5
+    PRINT "x is five"
+ELIF x == 6
+    PRINT "x is six"
+ELIF x == 7
+    PRINT "x is seven"
+ELSE
+    PRINT "i have no idea what the x is"
+;;
+
+/* Wrong */
+IF x == 5
+    PRINT "x is five"
+;;
+ELIF x == 6
+    PRINT "x is not five"
+;;
+
+```
 
 ### Loops
 
@@ -210,6 +321,9 @@ Logical expressions consists of atleast one _comparison_. ...
 ```sql
 /* Keywords */
 CREATE
+ELIF
+ELSE
+IF
 PRINT
 SET
 TO
