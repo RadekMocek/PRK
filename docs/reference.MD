@@ -227,13 +227,23 @@ IF (x == 5 OR y <> (6 + x)) AND !(5 * z <= 6)
 ;;
 
 /* Wrong */
+IF
+;;
+IF x
+;;
+IF x AND y
+;;
 IF 7 > x > 5
+;;
+IF !(x)
 ;;
 IF !  (x > 5)
 ;;
 IF !x > 5
 ;;
 IF !!(x > 5)
+;;
+IF x > 5ANDx < 7
 ;;
 IF (x>5)AND(x<7)
 ;;
@@ -311,29 +321,90 @@ ELSE
     PRINT "i have no idea what the x is"
 ;;
 
+/* - Does nothing but is correct - */
+IF x == 5
+ELIF x == 6
+ELIF x == 7
+ELSE
+;;
+
 /* Wrong */
+/* - Too soon termination - */
 IF x == 5
     PRINT "x is five"
-;;
+;; /* IF construct is terminated here → next construct begins with ELIF → invalid */
 ELIF x == 6
     PRINT "x is not five"
+;;
+
+/* - ELIF without condition - */
+IF x == 5
+ELIF
+;;
+
+/* - ELSE not alone - */
+IF x == 5
+ELSE x == 6
+;;
+
+/* - ELSE not last - */
+IF x == 5
+ELIF x == 6
+ELSE
+ELIF x == 7
 ;;
 
 ```
 
 ### Loops
 
+Loops are commands that iterate over the lines between the loop command line and the terminator `;;`.
+
+```sql
+REPEAT 3
+    PRINT "This will be printed 3 times."
+;;
+
+```
+
+#### Repeat loop
+
+The `REPEAT` command is followed by a value expression which determines how many times its "body" will be iterated.
+
+#### Until loop
+
+The `UNTIL` command is followed by a logical expression. Body will be iterated until the logical expression is true.
+
+```sql
+/* Correct */
+REPEAT x * 5
+;;
+UNTIL !(x == 5)
+;;
+
+/* Wrong */
+REPEAT !(x == 5)
+;;
+UNTIL x * 5
+;;
+REPEAT UNTIL !(x == 5)
+;;
+
+```
+
 ## List of keywords and operators
 
 ```sql
-/* Keywords */
+/* Command keywords */
 CREATE
 ELIF
 ELSE
 IF
 PRINT
+REPEAT
 SET
 TO
+UNTIL
 USERIN
 
 /* Strings */
@@ -363,6 +434,9 @@ AND
 
 /* Code blocks */
 ;;
+
+/* Comments */
+/**/
 ```
 
 <!--
