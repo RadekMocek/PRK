@@ -19,7 +19,7 @@
         "testsuite": {
             "patterns": [
                 {
-                    "match": "^(@.+:|@@)(.*)$",
+                    "match": "^(@@|@Name:|@Expect:)(.*)$",
                     "captures": {
                         "1": {
                             "name": "markup.bold.yapp"

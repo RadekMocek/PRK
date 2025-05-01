@@ -2,7 +2,7 @@
     "name": "yappembler",
     "displayName": "Yappembler",
     "description": "Yappembler language support",
-    "version": "0.1.0",
+    "version": "0.1.1",
     "publisher": "RDMCz",
     "repository": {
         "type": "git",
