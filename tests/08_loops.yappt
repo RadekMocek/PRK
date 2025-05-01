@@ -1,0 +1,75 @@
+@@
+@Name: Correct REPEAT 1
+@Expect: "This will be printed 3 times." "This will be printed 3 times." "This will be printed 3 times." "Phew!"
+
+REPEAT 3
+    PRINT "This will be printed 3 times."
+;;
+
+REPEAT -3
+    PRINT "???"
+;;
+
+PRINT "Phew!"
+
+@@
+@Name: Correct REPEAT 2
+@Expect: 9 8 7 6 5
+
+CREATE x y
+SET x TO 5
+SET y TO 10
+REPEAT x * 5 - 20
+    SET y TO y - 1
+    PRINT y
+;;
+
+@@
+@Name: Correct UNTIL
+@Expect: 5 ":-)" 5 ":-)" 5 ":-)" 5 ":-)" 5
+
+CREATE x y
+SET x TO 5
+UNTIL !(x == 5)
+    PRINT x
+    SET y TO y + 1
+    IF y == 5
+        SET x TO 0
+    ELSE
+        PRINT ":-)"
+    ;;
+;;
+
+@@
+@Name: REPEAT with logical expression 
+@Expect: Exception
+
+REPEAT !(x == 5)
+;;
+
+@@
+@Name: UNTIL with value expression
+@Expect: Exception
+
+UNTIL x * 5
+;;
+
+@@
+@Name: "REPEAT UNTIL"
+@Expect: Exception
+
+REPEAT UNTIL !(x == 5)
+;;
+
+@@
+@Name: Incorrect multi-line command 1
+@Expect: Exception
+
+REPEAT 5 PRINT "5" ;;
+
+@@
+@Name: Incorrect multi-line command 2
+@Expect: Exception
+
+REPEAT 5
+    PRINT "5"

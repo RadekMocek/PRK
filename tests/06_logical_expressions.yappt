@@ -52,35 +52,150 @@ IF (x>5)    AND     (x<7)
 
 @@
 @Name: Correct logical expressions 2
-@Expect: "b" "e"
+@Expect: "b" "e" "f" "h"
 
 CREATE x y z
 
+SET z TO 100
 IF x == 5 OR y <> 6 + x AND 5 * z <= 6
     PRINT "a"
 ;;
+
 SET x TO 5
 IF x == 5 OR y <> 6 + x AND 5 * z <= 6
     PRINT "b"
 ;;
+
 SET x TO 1
 SET y TO 7
 SET z TO 2
 IF x == 5 OR y <> 6 + x AND 5 * z <= 6
     PRINT "c"
 ;;
+
 SET y TO 0
 IF x == 5 OR y <> 6 + x AND 5 * z <= 6
     PRINT "d"
 ;;
+
 SET z TO -10
 IF x == 5 OR y <> 6 + x AND 5 * z <= 6
     PRINT "e"
 ;;
 
 IF (x == 5) OR (y <> 6 + x) AND (5 * z <= 6)
+    PRINT "f"
 ;;
-
 
 IF (x == 5 OR y <> (6 + x)) AND !(5 * z <= 6)
+    PRINT "g"
 ;;
+
+SET z TO 100
+
+IF (x == 5 OR y <> (6 + x)) AND !(5 * z <= 6)
+    PRINT "h"
+;;
+
+@@
+@Name: Incorrect logical expression 1
+@Expect: Exception
+
+IF
+;;
+
+@@
+@Name: Incorrect logical expression 2
+@Expect: Exception
+
+IF x
+;;
+
+@@
+@Name: Incorrect logical expression 3
+@Expect: Exception
+
+IF x AND y
+;;
+
+@@
+@Name: Incorrect logical expression 4
+@Expect: Exception
+
+IF 7 > x > 5
+;;
+
+@@
+@Name: Incorrect logical expression 5
+@Expect: Exception
+
+IF !(x)
+;;
+
+@@
+@Name: Incorrect logical expression 6
+@Expect: Exception
+
+IF !  (x > 5)
+;;
+
+@@
+@Name: Incorrect logical expression 7
+@Expect: Exception
+
+IF !x > 5
+;;
+
+@@
+@Name: Incorrect logical expression 8
+@Expect: Exception
+
+IF !!(x > 5)
+;;
+
+@@
+@Name: Incorrect logical expression 9
+@Expect: Exception
+
+IF x > 5ANDx < 7
+;;
+
+@@
+@Name: Incorrect logical expression 10
+@Expect: Exception
+
+IF (x>5)AND(x<7)
+;;
+
+@@
+@Name: Incorrect logical expression 11
+@Expect: Exception
+
+IF (x == 5 OR y <> !(6 + x)) AND (5 * z <= 6)
+;;
+
+@@
+@Name: Incorrect logical expression 12
+@Expect: Exception
+
+IF (x == 5) OR (y <> 6) + x AND (5 * z <= 6)
+;;
+
+@@
+@Name: Incorrect logical expression 13
+@Expect: Exception
+
+IF AND x==5
+;;
+
+@@
+@Name: Incorrect logical expression 14
+@Expect: Exception
+
+SET x TO 5 > 4
+
+@@
+@Name: Incorrect logical expression 15
+@Expect: Exception
+
+SET x TO 1 OR 2

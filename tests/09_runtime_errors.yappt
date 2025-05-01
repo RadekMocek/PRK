@@ -1,0 +1,27 @@
+@@
+@Name: Creating var for second time
+@Expect: 5 Exception
+
+CREATE x
+SET x TO 5
+PRINT x
+CREATE x
+
+@@
+@Name: Variable not created 1
+@Expect: Exception
+
+SET x TO 5
+
+@@
+@Name: Variable not created 2
+@Expect: Exception
+
+SET x USERIN
+
+@@
+@Name: Variable not created 3
+@Expect: Exception
+
+IF x == 5
+;;

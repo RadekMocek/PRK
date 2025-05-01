@@ -1,0 +1,115 @@
+@@
+@Name: Correct condition branching newlines
+@Expect: "Okay!" "Okay!" "Okay!"
+
+CREATE x
+SET x TO 5
+
+IF x == 5
+    PRINT "Okay!"
+;;
+
+IF x == 5
+PRINT "Okay!"
+;;
+
+    IF x == 5
+PRINT "Okay!"
+    ;;
+
+IF x == 5
+    IF x == 6
+        PRINT "Unreachable"
+    ;;
+;;
+
+@@
+@Name: Incorrect condition branching newlines 1
+@Expect: Exception
+
+IF x == 5 PRINT "NotOkay!"
+;;
+
+@@
+@Name: Incorrect condition branching newlines 2
+@Expect: Exception
+
+IF x == 5
+    PRINT "NotOkay!" ;;
+
+@@
+@Name: Incorrect condition branching newlines 3
+@Expect: Exception
+
+IF x == 5
+    IF x == 6
+        PRINT "Unreachable"
+;;;;
+
+@@
+@Name: Incorrect condition branching newlines 4
+@Expect: Exception
+
+IF x == 5
+    PRINT "NotOkay!"
+
+@@
+@Name: Correct full condition branching
+@Expect: "i have no idea what the x is" "that did nothing but is correct"
+
+CREATE x
+
+IF x == 5
+    PRINT "x is five"
+ELIF x == 6
+    PRINT "x is six"
+ELIF x == 7
+    PRINT "x is seven"
+ELSE
+    PRINT "i have no idea what the x is"
+;;
+
+IF x == 5
+ELIF x == 6
+ELIF x == 7
+ELSE
+;;
+
+PRINT "that did nothing but is correct"
+
+@@
+@Name: Too soon termination
+@Expect: Exception
+
+IF x == 5
+    PRINT "x is five"
+;; /* IF construct is terminated here → next construct begins with ELIF → invalid */
+ELIF x == 6
+    PRINT "x is not five"
+;;
+
+@@
+@Name: ELIF without condition
+@Expect: Exception
+
+IF x == 5
+ELIF
+;;
+
+@@
+@Name: ELSE not alone
+@Expect: Exception
+
+IF x == 5
+ELSE x == 6
+;;
+
+@@
+@Name: ELSE not last
+@Expect: Exception
+
+IF x == 5
+ELIF x == 6
+ELSE
+ELIF x == 7
+;;
