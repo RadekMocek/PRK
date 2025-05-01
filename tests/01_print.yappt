@@ -14,14 +14,6 @@ PRINT "Hello"
 PRINT"NOT OK"
 
 @@
-@Name: Test number 1 from Yappembler Test Suite specification
-@Expect: "some text" 4 Exception
-
-PRINT "some text"
-PRINT 2 + 2
-PRINT x     /* variable was not created: expecting Exception */
-
-@@
 @Name: Program example in README
 @Expect: "3..."    "2..."    "1..."    "Hello world!"
 

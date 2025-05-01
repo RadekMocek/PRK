@@ -12,7 +12,7 @@
 * [Loops](#loops)
 * [List of keywords and operators](#list-of-keywords-and-operators)
 
-## Reference
+## Reference guide
 
 ### Hello world – commenting code and printing text
 

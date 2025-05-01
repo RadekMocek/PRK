@@ -1,0 +1,42 @@
+@@
+@Name: Test number 1 from Yappembler Test Suite specification
+@Expect: "some text" 4 Exception
+
+PRINT "some text"
+PRINT 2 + 2
+PRINT x     /* variable was not created: expecting Exception */
+
+@@
+@Name: Test number 2 from Yappembler Test Suite specification
+@Expect: 5 10 "Hi!" "5" "5?" "5" Exception
+
+PRINT 5         /* This prints a integer, so we expect 5 */
+PRINT 5 + 5     /* This is also a integer, we expect 10 */
+
+PRINT "Hi!"     /* This is a string, we expect "Hi!" */
+PRINT "5"       /* This is a string, we expect "5" */
+PRINT 5 "?"     /* String aswell, we expect "5?" */
+PRINT 5 ""      /* Integer 5 with an empty string makes it a string, so we expect "5" again */
+
+PRINT x         /* Runtime error because x is not created, so we expect a error */
+
+@@
+@Name: Test number 3 from Yappembler Test Suite specification
+@Expect: "A" "C"
+
+CREATE x
+SET x TO 10
+
+IF x <> 5
+    PRINT "A"
+ELSE
+    PRINT "B"
+;;
+
+PRINT "C"
+
+@@
+@Name: Test number 4 from Yappembler Test Suite specification
+@Expect: Exception
+
+PRYNT "Hi!"

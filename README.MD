@@ -14,7 +14,7 @@ PRINT "Hello world!"
 &nbsp;
 
 * [Yappembler language specification](./docs/reference.MD)
-* [Yappembler Test Suite specification] ⚠WIP
+* [Yappembler Test Suite specification](./docs/reference_testing.MD)
 
 &nbsp;
 
