@@ -5,3 +5,5 @@ ANTLR/*.jar
 # - IntelliJ
 .idea/
 *.iml
+# .NET
+PUBLISHED/

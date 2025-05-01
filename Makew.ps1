@@ -1,0 +1,1 @@
+dotnet publish .\Interpret\Interpret.csproj --runtime win-x64 --no-self-contained --output .\PUBLISHED

@@ -12,7 +12,7 @@ namespace Interpret
         /// <param name="args">Command line arguments</param>
         static void Main(string[] args)
         {
-            const string argTip = "Try one of these:\n  interpret run <yappp_file_name>\n  interpret test <yappt_file_name>\n  interpret testdir <directory_with_yappt_files>";
+            const string argTip = "Try one of these:\n  ./Interpret run <yappp_file_name>\n  ./Interpret test <yappt_file_name>\n  ./Interpret testdir <directory_with_yappt_files>";
 
             var nArgs = args.Length;
 

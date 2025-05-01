@@ -18,7 +18,8 @@ PRINT "Hello world!"
 
 &nbsp;
 
-* [__How to build & run on Linux__] ⚠WIP
+* [__How to build & run on Linux__](./docs/linux.MD)
+* [How to build & run on Windows](./docs/windows.MD)
 
 &nbsp;
 
