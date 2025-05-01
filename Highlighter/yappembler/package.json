@@ -1,0 +1,55 @@
+{
+    "name": "yappembler",
+    "displayName": "Yappembler",
+    "description": "Yappembler language support",
+    "version": "0.1.0",
+    "publisher": "RDMCz",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/RadekMocek/PRK"
+    },
+    "engines": {
+        "vscode": "^1.99.0"
+    },
+    "categories": [
+        "Programming Languages"
+    ],
+    "contributes": {
+        "languages": [
+            {
+                "id": "yapp",
+                "aliases": [
+                    "Yappembler",
+                    "yapp"
+                ],
+                "extensions": [
+                    ".yappp"
+                ],
+                "configuration": "./language-configuration.json"
+            },
+            {
+                "id": "yappt",
+                "aliases": [
+                    "Yappembler Test Suite",
+                    "yappt"
+                ],
+                "extensions": [
+                    ".yappt"
+                ],
+                "configuration": "./language-configuration.json"
+            }
+        ],
+        "grammars": [
+            {
+                "language": "yapp",
+                "scopeName": "source.yappp",
+                "path": "./syntaxes/yapp.tmLanguage.json"
+            },
+            {
+                "language": "yappt",
+                "scopeName": "source.yappt",
+                "path": "./syntaxes/yappt.tmLanguage.json"
+            }
+        ]
+    }
+}

@@ -1,0 +1,114 @@
+@@
+@Name: Correct value expressions 1
+@Expect: 11 12
+
+CREATE x
+SET x TO 10
+SET x TO x+1
+PRINT x
+SET x TO    x  +   1
+PRINT x
+
+@@
+@Name: Operator priority
+@Expect: 29 29 45
+
+PRINT 4+5*5
+PRINT 4+(5*5)
+PRINT (4+5)*5
+
+@@
+@Name: Correct value expressions 2
+@Expect: 100 100
+
+PRINT (-10 * 5 / (-5)) ^ (27 % 5)
+CREATE a b c d
+SET a TO -10
+SET b TO a / -2
+SET c TO -b
+SET d TO 20 + 7
+PRINT (a * b / (c)) ^ (d % b)
+
+@@
+@Name: Correct value expressions 3
+@Expect: -100 200 -9900 -9900 -9900
+
+CREATE a
+SET a TO 100
+PRINT -a
+PRINT a - - - - - - - - a
+PRINT a+a*-a
+PRINT a+a*(-a)
+PRINT a+a*-(a)
+
+@@
+@Name: Incorrect value expressions 1
+@Expect: Exception
+
+PRINT (a+a)*
+
+@@
+@Name: Incorrect value expressions 2
+@Expect: Exception
+
+PRINT (a*a+(a))+a*a)
+
+@@
+@Name: Incorrect value expressions 3
+@Expect: Exception
+
+PRINT a+
+
+@@
+@Name: Incorrect value expressions 4
+@Expect: Exception
+
+PRINT *a
+
+@@
+@Name: Incorrect value expressions 5
+@Expect: Exception
+
+PRINT +a
+
+@@
+@Name: Incorrect value expressions 6
+@Expect: Exception
+
+PRINT a+*
+
+@@
+@Name: Incorrect value expressions 7
+@Expect: Exception
+
+PRINT a+(a+a
+
+@@
+@Name: Incorrect value expressions 8
+@Expect: Exception
+
+PRINT )a*a)
+
+@@
+@Name: Incorrect value expressions 9
+@Expect: Exception
+
+PRINT a++a
+
+@@
+@Name: Incorrect value expressions 10
+@Expect: Exception
+
+PRINT (a+
+
+@@
+@Name: Incorrect value expressions 11
+@Expect: Exception
+
+PRINT a)*a
+
+@@
+@Name: Incorrect value expressions 12
+@Expect: Exception
+
+PRINT a + + + a

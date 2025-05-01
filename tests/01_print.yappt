@@ -1,0 +1,41 @@
+@@
+@Name: Printing strings
+@Expect: "Hello", "hi!"
+
+/* Comments are not getting evalueated */
+PRINT "Hello"
+/* Whitespace doesn't break things */
+    PRINT   "hi!"
+
+@@
+@Name: No space between PRINT and string
+@Expect: Exception
+
+PRINT"NOT OK"
+
+@@
+@Name: Test number 1 from Yappembler Test Suite specification
+@Expect: "some text" 4 Exception
+
+PRINT "some text"
+PRINT 2 + 2
+PRINT x     /* variable was not created: expecting Exception */
+
+@@
+@Name: Program example in README
+@Expect: "3..."    "2..."    "1..."    "Hello world!"
+
+/* 3... 2... 1... Hello world! */
+CREATE i
+SET i TO 3
+UNTIL i == 0
+    PRINT i "..."
+    SET i TO i - 1
+;;
+PRINT "Hello world!"
+
+@@
+@Name: Program structure
+@Expect: Exception
+
+PRINT "Hello" PRINT "world!"

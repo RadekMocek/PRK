@@ -1,0 +1,86 @@
+@@
+@Name: Correct logical expressions 1
+@Expect: 6 7 9 6 6 6
+
+CREATE x
+
+SET x TO 5
+IF x > 5
+    PRINT x
+;;
+SET x TO 6 
+IF x > 5
+    PRINT x
+;;
+
+IF 8 > x AND x > 6
+    PRINT x
+;;
+SET x TO 7
+IF 8 > x AND x > 6
+    PRINT x
+;;
+
+IF !(8 > x) AND x > 5
+    PRINT x
+;;
+SET x TO 9
+IF !(8 > x) AND x > 5
+    PRINT x
+;;
+
+IF !(!(7 > x)) AND x > 5
+    PRINT x
+;;
+SET x TO 6
+IF !(!(7 > x)) AND x > 5
+    PRINT x
+;;
+
+SET x TO 100
+IF !(!(7 > x) AND x > 5)
+    PRINT x
+;;
+SET x TO 6
+IF !(!(7 > x) AND x > 5)
+    PRINT x
+;;
+
+IF (x>5)    AND     (x<7)
+    PRINT x
+;;
+
+@@
+@Name: Correct logical expressions 2
+@Expect: "b" "e"
+
+CREATE x y z
+
+IF x == 5 OR y <> 6 + x AND 5 * z <= 6
+    PRINT "a"
+;;
+SET x TO 5
+IF x == 5 OR y <> 6 + x AND 5 * z <= 6
+    PRINT "b"
+;;
+SET x TO 1
+SET y TO 7
+SET z TO 2
+IF x == 5 OR y <> 6 + x AND 5 * z <= 6
+    PRINT "c"
+;;
+SET y TO 0
+IF x == 5 OR y <> 6 + x AND 5 * z <= 6
+    PRINT "d"
+;;
+SET z TO -10
+IF x == 5 OR y <> 6 + x AND 5 * z <= 6
+    PRINT "e"
+;;
+
+IF (x == 5) OR (y <> 6 + x) AND (5 * z <= 6)
+;;
+
+
+IF (x == 5 OR y <> (6 + x)) AND !(5 * z <= 6)
+;;

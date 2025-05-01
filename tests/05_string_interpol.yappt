@@ -1,0 +1,119 @@
+@@
+@Name: Basic string interpol
+@Expect: "1122" "11223" "11223" "112233" "101102103" "100"
+
+PRINT 1 "1" 2"2"
+PRINT 1 "1" 2 "2"3
+PRINT "1" 1 "2" 2"3"
+PRINT "1" 1 "2" 2 "3"3
+CREATE x
+SET x TO 100
+PRINT x+1 "" x+2 "" x+3
+PRINT ""x""
+
+@@
+@Name: Practical string interpol 1
+@Expect: "The value of x is 5 and the value of y is not 1728."
+
+CREATE x y
+SET x TO 5
+SET y TO 6
+PRINT "The value of x is " x " and the value of y is not " (y * 2) ^ 3 "."
+
+@@
+@Name: Practical string interpol 2
+@Expect: "The value of x is 5 and the value of y is not 1728."
+
+CREATE x y
+SET x TO 5
+SET y TO 6
+PRINT "The value of x is "   x   " and the value of y is not "   (y * 2) ^ 3   "."
+
+@@
+@Name: Practical string interpol 3
+@Expect: "The value of x is 5 and the value of y is not 1728."
+
+CREATE x y
+SET x TO 5
+SET y TO 6
+PRINT "The value of x is "x" and the value of y is not "(y * 2) ^ 3"."
+
+@@
+@Name: Practical string interpol 4
+@Expect: "The value of negative x is -5"
+
+CREATE x
+SET x TO 5
+PRINT "The value of negative x is " -x
+
+@@
+@Name: Wrong string interpol 1
+@Expect: Exception
+
+PRINT 1 2 "1 2"
+
+@@
+@Name: Wrong string interpol 2
+@Expect: Exception
+
+PRINT 12 "1" "2"
+
+@@
+@Name: Wrong string interpol 3
+@Expect: Exception
+
+PRINT """x"""
+
+@@
+@Name: Wrong string interpol 4
+@Expect: Exception
+
+PRINT """"x""""
+
+@@
+@Name: Wrong string interpol 5
+@Expect: Exception
+
+PRINT x+1 x+2 x+3
+
+@@
+@Name: Wrong string interpol 6
+@Expect: Exception
+
+PRINT "The value of x is ", x, "."
+
+@@
+@Name: Wrong string interpol 7
+@Expect: Exception
+
+PRINT "The value of x is " + x + "."
+
+@@
+@Name: Wrong string interpol 8
+@Expect: Exception
+
+PRINT "The value of x is " x " thanks for your attention
+
+@@
+@Name: Wrong string interpol 9
+@Expect: Exception
+
+PRINT """""
+
+@@
+@Name: Wrong string interpol 10
+@Expect: Exception
+
+PRINT x+1+ "" x+2
+
+@@
+@Name: Wrong string interpol 11
+@Expect: Exception
+
+PRINT ("")
+
+@@
+@Name: Pritning logical expression
+@Expect: Exception
+
+PRINT x == 5

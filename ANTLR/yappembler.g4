@@ -1,4 +1,4 @@
-grammar yappembler;
+grammar Yappembler;
 
 program
         : lines EOF
@@ -8,16 +8,23 @@ lines
         : ( command NEWLINE | NEWLINE )*
 ;
 
-
 command
-        : 'CREATE ' ( VARID )* VARID
-        | 'SET ' VARID 'TO ' expr
-        | 'SET ' VARID 'USERIN'
-        | 'PRINT ' interpol
-        | 'IF ' logc NEWLINE lines ( 'ELIF ' logc NEWLINE lines )* ( 'ELSE' NEWLINE lines )? ';;'
-        | 'REPEAT ' expr NEWLINE lines ';;'
-        | 'UNTIL ' logc NEWLINE lines ';;'
+        : create_command
+        | set_command
+        | userin_command
+        | print_command
+        | if_command
+        | repeat_command
+        | until_command
 ;
+
+create_command : 'CREATE ' ( VARID )* VARID ;
+set_command : 'SET ' VARID 'TO ' expr ;
+userin_command : 'SET ' VARID 'USERIN' ;
+print_command : 'PRINT ' interpol ;
+if_command : 'IF ' logc NEWLINE lines ( 'ELIF ' logc NEWLINE lines )* ( 'ELSE' NEWLINE lines )? ';;' ;
+repeat_command : 'REPEAT ' expr NEWLINE lines ';;' ;
+until_command : 'UNTIL ' logc NEWLINE lines ';;' ;
 
 interpol
         : STRING ( expr STRING )*
@@ -87,3 +94,32 @@ COMMENT_SKIP : '/*' .*? '*/' -> skip ;
 fragment WS : [ \t]+ ;
 OR : WS 'OR' WS ;
 AND : WS 'AND' WS ;
+
+/* ------ */
+
+CREATE : 'CREATE ' ;
+SET : 'SET ' ;
+TO : 'TO ' ;
+USERIN : 'USERIN' ;
+PRINT : 'PRINT ' ;
+IF : 'IF ' ;
+ELIF : 'ELIF ' ;
+ELSE : 'ELSE' ;
+END : ';;' ;
+REPEAT : 'REPEAT ' ;
+UNTIL : 'UNTIL ' ;
+OPE_MAT_PLUS : '+' ;
+OPE_MAT_MINUS : '-' ;
+OPE_MAT_STAR : '*' ;
+OPE_MAT_SLASH : '/' ;
+OPE_MAT_PERCENT : '%' ;
+OPE_MAT_HAT : '^' ;
+OPE_BRK_OPEN : '(' ;
+OPE_BRK_CLOSE : ')' ;
+OPE_BRK_OPEN_NEG : '!(' ;
+OPE_LOG_EQ : '==' ;
+OPE_LOG_GE : '>=' ;
+OPE_LOG_LE : '<=' ;
+OPE_LOG_NEQ : '<>' ;
+OPE_LOG_GT : '>' ;
+OPE_LOG_LT : '<' ;

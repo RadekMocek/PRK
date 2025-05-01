@@ -1,0 +1,54 @@
+@@
+@Name: Creating variables
+@Expect: "0000000"
+
+CREATE varA
+CREATE varB varC
+    CREATE  varD  varE      varF
+CREATE a123___
+PRINT varA "" varB "" varC "" varD "" varE "" varF "" a123___
+
+@@
+@Name: Uppercase varname
+@Expect: Exception
+
+CREATE VAR
+
+@@
+@Name: Pascalcase varname
+@Expect: Exception
+
+CREATE Var
+
+@@
+@Name: Varname starting with underscore
+@Expect: Exception
+
+CREATE _var
+
+@@
+@Name: Varname starting with digit
+@Expect: Exception
+
+CREATE 0var
+
+@@
+@Name: Varname with non-ascii letter
+@Expect: Exception
+
+CREATE řeřicha
+
+@@
+@Name: No space between CREATE and varname
+@Expect: Exception
+
+CREATEvarA varB
+
+@@
+@Name: Create same var again
+@Expect: 0 Exception
+
+CREATE x
+PRINT x
+CREATE x /* Error */
+PRINT x

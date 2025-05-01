@@ -1,5 +1,17 @@
 # Yappembler
 
+## Contents
+
+* [Hello world – commenting code and printing text](#hello-world--commenting-code-and-printing-text)
+* [Program structure and whitespace behaviour](#program-structure-and-whitespace-behaviour)
+* [Variables – creating, setting, printing](#variables)
+* [Value expressions, operator priority](#value-expressions)
+* [String interpolation](#string-interpolation)
+* [Logical expressions](#logical-expressions)
+* [Condition branching](#condition-branching)
+* [Loops](#loops)
+* [List of keywords and operators](#list-of-keywords-and-operators)
+
 ## Reference
 
 ### Hello world – commenting code and printing text
@@ -12,10 +24,9 @@ PRINT "Hello world!"
 Multi-line comments
 are supported.
 */
-
 ```
 
-Element that starts and ends with double quotation marks, with any number of any characters in between, is called _string_. Backslash `\` serves as a escape character, so `PRINT "Hello \"World\"!"` command will print `Hello "World"!`.
+Element that starts and ends with double quotation marks, with any number of any characters in between, is called _string_.
 
 ### Program structure and whitespace behaviour
 
@@ -28,7 +39,6 @@ PRINT "Second command"
 
 /* Wrong */
 PRINT "First command" PRINT "Second command"
-
 ```
 
 Every command is some combination of keywords, operators, expressions and identifiers. These elements in command are separated by space. It doesn't matter how many spaces are there between elements, but there has to be atleast one.
@@ -42,7 +52,6 @@ PRINT   "OK"
 
 /* Wrong */
 PRINT"NOK"
-
 ```
 
 ### Variables
@@ -71,7 +80,6 @@ CREATE _var
 CREATE 0var
 CREATE řeřicha
 CREATEvarA varB
-
 ```
 
 #### Setting variables
@@ -92,7 +100,6 @@ SETvarA TO0
 SET varA TO0
 SET 0 TO 1
 SET x TO "abc"
-
 ```
 
 #### Setting variables from user input
@@ -106,14 +113,12 @@ SET     varB    USERIN
 
 /* Wrong */
 SET varA TO USERIN
-
 ```
 
 #### Printing variables
 
 ```sql
 PRINT varA
-
 ```
 
 ### Value expressions
@@ -157,7 +162,6 @@ PRINT a++a
 PRINT (a+
 PRINT a)*a
 PRINT a + + + a
-
 ```
 
 From now on, variable identifiers and integer constants will also be adressed as value expressions.
@@ -182,8 +186,8 @@ PRINT "The value of negative x is " -x
 /* Wrong */
 PRINT 1 2 "1 2"
 PRINT 12 "1" "2"
-PRINT """x"""
-PRINT """"x""""
+PRINT """x""" /* Value expressions and strings must alternate, this is a string "x" between two empty strings */
+PRINT """"x"""" /* Var. x is ok here, but before and after it there are two empty strings w/o value expression between them */
 PRINT x+1 x+2 x+3
 PRINT "The value of x is ", x, "."
 PRINT "The value of x is " + x + "."
@@ -192,7 +196,6 @@ PRINT """""
 PRINT x+1+ "" x+2
 PRINT ("")
 PRINT x == 5 /* Logical expressions cannot be printed */
-
 ```
 
 ### Logical expressions
@@ -256,7 +259,6 @@ IF AND x==5
 
 SET x TO 5 > 4
 SET x TO 1 OR 2
-
 ```
 
 ### Condition branching
@@ -353,7 +355,6 @@ ELIF x == 6
 ELSE
 ELIF x == 7
 ;;
-
 ```
 
 ### Loops
@@ -364,7 +365,6 @@ Loops are commands that iterate over the lines between the loop command line and
 REPEAT 3
     PRINT "This will be printed 3 times."
 ;;
-
 ```
 
 #### Repeat loop
@@ -389,7 +389,6 @@ UNTIL x * 5
 ;;
 REPEAT UNTIL !(x == 5)
 ;;
-
 ```
 
 ## List of keywords and operators
@@ -409,7 +408,6 @@ USERIN
 
 /* Strings */
 ""
-\
 
 /* Value expressions */
 +

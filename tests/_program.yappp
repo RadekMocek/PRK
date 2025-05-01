@@ -1,0 +1,18 @@
+CREATE ch
+SET ch TO 1
+
+PRINT ""
+
+REPEAT 8
+    PRINT ch
+    SET ch TO 1 + ch * 10
+;;
+
+PRINT "Yappembler is working!"
+
+UNTIL ch == 1
+    SET ch TO ch / 10
+    PRINT ch
+;;
+
+PRINT ""

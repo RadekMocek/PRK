@@ -1,0 +1,62 @@
+{
+    "$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+    "name": "Yappembler",
+    "patterns": [
+        {
+            "include": "#comments"
+        },
+        {
+            "include": "#strings"
+        },
+        {
+            "include": "#keywords"
+        }
+    ],
+    "repository": {
+        "comments": {
+            "patterns": [
+                {
+                    "name": "comment.block.yapp",
+                    "begin": "/\\*",
+                    "end": "\\*/"
+                }
+            ]
+        },
+        "strings": {
+            "name": "string.quoted.double.yapp",
+            "begin": "\"",
+            "end": "\"",
+            "patterns": [
+                {
+                    "name": "constant.character.escape.yapp",
+                    "match": "\\\\."
+                }
+            ]
+        },
+        "keywords": {
+            "patterns": [
+                {
+                    "name": "keyword.control.yapp",
+                    "match": "\\b(CREATE|ELIF|ELSE|IF|PRINT|REPEAT|SET|TO|UNTIL|USERIN|OR|AND)\\b"
+                },
+                {
+                    "name": "keyword.control.yapp",
+                    "match": ";;"
+                },
+                {
+                    "name": "constant.numeric.yapp",
+                    "match": "-?[1-9][0-9]*|0"
+                },
+                {
+                    "name": "keyword.operator.yapp",
+                    "match": "==|<=|>=|<>|<|>|\\!|\\+|\\-|\\*|/|%|\\^"
+                },
+                {
+                    "name": "variable.other.yapp",
+                    "match": "\\b[a-z][a-zA-Z0-9_]*\\b"
+                }
+            ]
+        }
+    },
+    "scopeName": "source.yappp"
+}

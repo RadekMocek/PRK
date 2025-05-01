@@ -1,4 +1,5 @@
 # ANTRL
+ANTLR/*.jar
 # - VSCode
 .antlr/
 # - IntelliJ
