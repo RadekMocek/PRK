@@ -38,9 +38,11 @@ namespace Interpret.Service.Visitor
         /// </summary>
         public override object VisitLines([NotNull] YappemblerParser.LinesContext context)
         {
-            foreach (var child in context.children) {
-                if (child is YappemblerParser.CommandContext) {
-                    Visit(child);
+            if (context.children is not null) {
+                foreach (var child in context.children) {
+                    if (child is YappemblerParser.CommandContext) {
+                        Visit(child);
+                    }
                 }
             }
             return null;
