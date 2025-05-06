@@ -30,7 +30,7 @@ These are the differences between normal Yappembler program and a Yappembler Tes
 
 In the `.yappt` file, before writing the code you want to test, you must specify the name of the test and expected output values of the tested code.
 
-The only way for Yappembler program to "output" a value is via the `PRINT` command. So if your program is just one line containing `PRINT "Testing is awesome"`, than your only expected value should be `"Testing is awesome"`. In this example we print and expect a _string_, but you can also expect _integer_ or a _error_.
+The only way for Yappembler program to "output" a value is via the `PRINT` command. So if your program is just one line containing `PRINT "Testing is awesome"`, than your only expected value should be `"Testing is awesome"`. In this example we print and expect a _string_, but you can also expect _integer_ or an _error_.
 
 ```sql
 PRINT 5         /* This prints a integer, so we expect 5 */
@@ -54,9 +54,10 @@ Keyword `Exception` is used for expecting an error. Writing more expected values
 
 One `.yappt` file can contain multiple tests. Each test definition must contain (in this order):
 
-* `@@` (two At signs on a seperate line)
-* `@Name:` followed by a name of the test. Name is shown in the terminal when tests are running and does not have to be unique. (on a seperate line)
-* `@Expect:` followed by a list of expected values separated by spaces (on a seperate line)
+* Test header, which consist of 3 parts each on its own line:
+  * `@@` (two At signs)
+  * `@Name:` followed by a name of the test. Name is shown in the terminal when tests are running and does not have to be unique.
+  * `@Expect:` followed by a list of expected values separated by spaces
 * Code that will be tested
 
 Example of a test file with four tests:
@@ -68,7 +69,7 @@ Example of a test file with four tests:
 
 PRINT "some text"
 PRINT 2 + 2
-PRINT x
+PRINT x  /* Runtime error because 'CREATE x' command wasn't called */
 
 @@
 @Name: Test two
@@ -103,7 +104,7 @@ PRINT "C"
 @Name: Test four
 @Expect: Exception
 
-PRYNT "Hi!"
+PRYNT "Hi!"  /* Grammar parsing error: unknown token 'PRYNT' */
 ```
 
 ### Running the tests
@@ -111,11 +112,19 @@ PRYNT "Hi!"
 To run a single `.yappt` file:
 
 ```ps1
+# Windows
 .\Interpret.exe test <path_to_yappt_file>
+
+# Linux
+./Interpret test <path_to_yappt_file>
 ```
 
 To run all `.yappt` files inside a directory (not counting nested directories):
 
 ```ps1
+# Windows
 .\Interpret.exe testdir <path_to_directory>
+
+# Linux
+./Interpret testdir <path_to_directory>
 ```

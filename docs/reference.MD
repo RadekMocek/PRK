@@ -26,11 +26,15 @@ are supported.
 */
 ```
 
-Element that starts and ends with double quotation marks, with any number of any characters in between, is called _string_.
+Element that starts and ends with double quotation marks, with any number of any characters in between, is called a "string".
+
+By typing the keyword `PRINT` followed by a string, we've created a "PRINT command". Executing the code in the above example will print _Hello world!_ to the terminal.
+
+Yappembler uses a C-style multi-line comments so any text between `/*` and `*/` will be ignored by the parser.
 
 ### Program structure and whitespace behaviour
 
-Program in Yappembler consists of commands. Each command is on its own line ⇒ there must be a newline character after every command. There are constructions in Yappembler which may thought of as a "multi-line command", e.g. condition branching via `IF - ELIF - ELSE`.
+Program in Yappembler consists of commands. Each command is on its own line ⇒ there must be a newline character after every command. There are constructions in Yappembler which may be thought of as a "multi-line command", e.g. condition branching via `IF - ELIF - ELSE`.
 
 ```sql
 /* Correct */
@@ -56,11 +60,11 @@ PRINT"NOK"
 
 ### Variables
 
-Variables allow us to store integers.
+Variables allow us to store integers for repeated use in code.
 
 #### Creating variables and variable identifier
 
-Variable names must start with a lowercase ASCII letter. This first character may be followed by arbitrary amount of: any lowercase or uppercase ASCII letter, any digit, a underscore.
+Variable identifiers must start with a lowercase ASCII letter. This first character may be followed by arbitrary amount of: any lowercase or uppercase ASCII letter, any digit, a underscore.
 
 To create a variable we use the CREATE command. Multiple variables can be created with one CREATE command, their identifiers are divided with spaces.
 
@@ -74,32 +78,48 @@ CREATE varB varC
 CREATE a123___
 
 /* Wrong */
-CREATE VAR
+CREATE VAR  /* Must start with lowercase letter */
 CREATE Var
 CREATE _var
 CREATE 0var
-CREATE řeřicha
+CREATE řeřicha  /* Non-ASCII letters */
 CREATEvarA varB
 ```
 
 #### Setting variables
 
-After we create a variable, we can set its value via the SET command.
+After we create a variable, we can set its value via the SET command. SET command consists of 4 elements in this order:
+
+* `SET` keyword
+* Variable indetifier
+* `TO` keyword
+* Value expression
+
+Value expressions are discussed in the next section. For now, we make do with the fact that the simplest value expression is a positive integer – a number with `'0' | [1-9] [0-9]*` pattern.
 
 ```sql
 /* Correct */
 SET varA TO 0
-SET     varB    TO      2000
+SET varB TO 1000
+  SET     varC    TO      2000
+/* Of course, 'CREATE varA varB varC' command must be called first to avoid runtime errors. */
 
 /* Wrong */
-SETvarA TO 0
-SET varATO 0
-SET varA TO0
-SET varATO0
-SETvarA TO0
-SET varA TO0
+/* - Insufficient spaces between command elemets - */
+SETvarW TO 0
+SET varWTO 0
+SET varW TO0
+SET varWTO0
+SETvarW TO0
+SET varW TO0
+/* - Invalid variable identifier or value expression - */
+SET varW TO 0500
+SET varW TO 1 000
+SET varW TO 1_000
+SET varW TO 1,000
+SET varW TO 1.000
+SET varW TO "abc"
 SET 0 TO 1
-SET x TO "abc"
 ```
 
 #### Setting variables from user input
@@ -117,13 +137,19 @@ SET varA TO USERIN
 
 #### Printing variables
 
+Typing variable identifier instead of a string in the PRINT command will print variable's value to the terminal.
+
 ```sql
 PRINT varA
 ```
 
+The PRINT command also allows usage of value expressions and "string interpolation". These will now be discussed:
+
 ### Value expressions
 
-Value expressions consist of constant integers (`'0' | [1-9] [0-9]*`) and/or variable identificators, which must be separated with mathematical operators (`+`, `-`, `*`, `/`, `%`, `^`). These operators are binary, unary minus operator `-` is also allowed. Brackets (`(` and `)`) can be used to specify operation priority.
+Value expressions allow us to perform mathematical operations with integers that are explicitly typed or stored in some variable. Result of this expression can then be stored into a variable, printed to the terminal, etc. One of the simpliest examples of value expression is `PRINT 1 + 1`, which prints _2_ to the terminal.
+
+Value expressions consist of positive integers (`'0' | [1-9] [0-9]*`) and/or variable identifiers, which must be separated with mathematical operators (`+`, `-`, `*`, `/`, `%`, `^`). These operators are binary. Unary minus operator `-` is also allowed. Brackets (`(` and `)`) can be used to specify operation priority.
 
 * Value expressions can be used in:
   * The `SET` command
@@ -168,16 +194,19 @@ From now on, variable identifiers and integer constants will also be adressed as
 
 ### String interpolation
 
-The `PRINT` command can be followed by any amount of value expressions and strings. They can be separated by spaces, but it's not mandatory. Value expressions and strings must alternate – there cannot be more strings or more expressions next to each other.
+String interpolation allows us to print out a one line of text with combination of strings and value expressions using a PRINT command.
+
+The PRINT command can be followed by any amount of value expressions and strings. They can be separated by spaces, but it's not mandatory. Value expressions and strings must alternate – there cannot be more strings or more expressions next to each other.
 
 ```sql
 /* Correct */
-PRINT 1 "1" 2"2"
-PRINT 1 "1" 2 "2"3
+PRINT 1 "1" 2"2"  /* Results in "1122" */
+PRINT 1 "1" 2 "2"3  /* Results in "11223" */
 PRINT "1" 1 "2" 2"3"
 PRINT "1" 1 "2" 2 "3"3
-PRINT x+1 "" x+2 "" x+3
+PRINT x+1 "" x+2 "" x+3  /* If x equals 5, then this results in "678" */
 PRINT ""x"" /* May look wrong but it's just a variable x between two empty strings */
+/* - More practical usage - */
 PRINT "The value of x is " x " and the value of y is not " (y * 2) ^ 3 "."
 PRINT "The value of x is "   x   " and the value of y is not "   (y * 2) ^ 3   "."
 PRINT "The value of x is "x" and the value of y is not "(y * 2) ^ 3"."
@@ -200,11 +229,25 @@ PRINT x == 5 /* Logical expressions cannot be printed */
 
 ### Logical expressions
 
+Logical expressions allow us to branch into or repeat parts of code based on some conditions. Simple example would be:
+
+```sql
+PRINT "Guess my favourite number:"
+CREATE input
+SET input USERIN
+IF input == 23
+    PRINT "Yes! That's my favourite number."
+ELSE
+    PRINT "That is not my favourite number."
+;;
+PRINT "Bye!"
+```
+
 Logical expressions consists of atleast one _comparison_. Comparison consists of two value expressions and one comparison operator in between them<!--: `<Comparison> → <Value Expression> <Comparison Operator> <Value Expression>`-->. Comparison operators are: `==`, `<>`, `>=`, `>`, `<=`, `<`.
 
 More complex logical expressions can be made by joining multiple comparisons together with `AND`/`OR` keywords. Both of these keywords have to be separated from surrounding expressions with atleast one space on each side.
 
-Brackets can be used to specify priority and exclamation mark (`!`, _negation_) can be used to flip the outcome of the comparison(s). Negation can be written only before brackets containing comparisons(s). There mustn't be any spaces between negation and expression in the bracket.
+Brackets (`(` and `)`) can be used to specify `AND`/`OR` priority. Exclamation mark (`!`, "negation") can be used to flip the outcome of the comparison(s). Negation can be written only before brackets containing comparisons(s). There mustn't be any spaces between negation and expression in the bracket.
 
 Logical expressions are used in branching via the `IF` command and looping via the `UNTIL` command.
 
@@ -263,7 +306,7 @@ SET x TO 1 OR 2
 
 ### Condition branching
 
-Branching can be done with the `IF` command, which is followed by a logical expression. Line with the `IF` command is then followed by any number of other commands (each on their own line), which shall be executed if the logical expression is true. This "chain of conditioned commands" must be terminated with two semicolons (`;;`, _terminator_). Terminator must be on its own line.
+Branching can be done with the `IF` command, which is followed by a logical expression. Line with the `IF` command is then followed by any number of other commands (each on their own line), which shall be executed if the logical expression is true. This chain of conditioned commands must be terminated with two semicolons (`;;`, "terminator"). Terminator must be on its own line.
 
 ```sql
 /* Correct */

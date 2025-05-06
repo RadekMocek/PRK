@@ -1,48 +1,56 @@
 @@
 @Name: Correctly setting variables
-@Expect: 0 2000
+@Expect: 0 1000 2000
 
-CREATE varA varB
+CREATE varA varB varC
 SET varA TO 0
-SET     varB    TO      2000
+SET varB TO 1000
+  SET     varC    TO      2000
 PRINT varA
 PRINT varB
+PRINT varC
 
 @@
 @Name: No space between SET and varname
 @Expect: Exception
 
-SETvarA TO 0
+CREATE varW
+SETvarW TO 0
 
 @@
 @Name: No space between varname and TO
 @Expect: Exception
 
-SET varATO 0
+CREATE varW
+SET varWTO 0
 
 @@
 @Name: No space between TO and value
 @Expect: Exception
 
-SET varA TO0
+CREATE varW
+SET varW TO0
 
 @@
 @Name: No space combination 1
 @Expect: Exception
 
-SET varATO0
+CREATE varW
+SET varWTO0
 
 @@
 @Name: No space combination 2
 @Expect: Exception
 
-SETvarA TO0
+CREATE varW
+SETvarW TO0
 
 @@
 @Name: No space combination 3
 @Expect: Exception
 
-SET varA TO0
+CREATE varW
+SET varW TO0
 
 @@
 @Name: SET 0 TO 1
@@ -54,4 +62,40 @@ SET 0 TO 1
 @Name: SET x TO "abc"
 @Expect: Exception
 
-SET x TO "abc"
+CREATE varW
+SET varW TO "abc"
+
+@@
+@Name: SET x TO 0500
+@Expect: Exception
+
+CREATE varW
+SET varW TO 0500
+
+@@
+@Name: SET x TO 1 000
+@Expect: Exception
+
+CREATE varW
+SET varW TO 1 000
+
+@@
+@Name: SET x TO 1_000
+@Expect: Exception
+
+CREATE varW
+SET varW TO 1_000
+
+@@
+@Name: SET x TO 1,000
+@Expect: Exception
+
+CREATE varW
+SET varW TO 1,000
+
+@@
+@Name: SET x TO 1.000
+@Expect: Exception
+
+CREATE varW
+SET varW TO 1.000

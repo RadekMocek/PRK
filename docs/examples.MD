@@ -22,6 +22,24 @@ PRINT "Greatest common divisor of " og_a " and " og_b " is " a
 
 ```
 
+### User input
+
+```sql
+CREATE a b
+
+PRINT "Enter first number:"
+SET a USERIN
+PRINT "Enter second number:"
+SET b USERIN
+
+PRINT a " + " b " = " a + b
+PRINT a " - " b " = " a - b
+PRINT a " * " b " = " a * b
+PRINT a " / " b " = " a / b
+PRINT a " % " b " = " a % b
+PRINT a " ^ " b " = " a ^ b
+```
+
 ### Nesting loops
 
 ```sql
@@ -33,10 +51,10 @@ UNTIL !(y <= mx_size - 1)
     SET x TO 0
     REPEAT mx_size
         PRINT "(" y ", " x ")"
-        SET x TO x + 1
-        IF x == 4
-            PRINT "Last inner iteration"
+        IF x == mx_size - 1
+            PRINT "That was last inner iteration"
         ;;
+        SET x TO x + 1
     ;;
     SET y TO y + 1
 ;;
